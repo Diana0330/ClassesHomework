@@ -23,6 +23,25 @@ class Student:
             else:
                 lecturer.lecture_grades[course_name] = [grade]
 
+    def __average_grade(self):
+        summa = 0
+        counter = 0
+        for grade in self.grades.values():
+            summa += sum(grade)
+            counter += len(grade)
+        return summa/counter
+
+    def __str__(self):
+        return f'Имя: {self.name}\n' \
+        f'Фамилия: {self.surname}\n' \
+        f'Средняя оценка за домашние задания: {self.__average_grade()}\n' \
+        f'Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n' \
+        f'Завершенные курсы: {', '.join(self.courses_in_progress)}'
+
+
+
+#def __str__(self):
+#         return f'Город: {self.name}, население: {self.population}'
 
 # Problem 2
 class Mentor:
@@ -38,6 +57,20 @@ class Lecturer(Mentor):
         self.lecture_grades = {}
         super().__init__(name, surname)
 
+    def __average_grade(self):
+        summa = 0
+        counter = 0
+        for grade in self.lecture_grades.values():
+            summa += sum(grade)
+            counter += len(grade)
+        return summa/counter
+
+    def __str__(self):
+        return f'Имя: {self.name}\n' \
+        f'Фамилия: {self.surname}\n' \
+        f'Средняя оценка за за лекции: {self.__average_grade()}'
+
+
 
 class Reviewer(Mentor):
 
@@ -49,6 +82,11 @@ class Reviewer(Mentor):
                 student.grades[course] = [grade]
         else:
             return 'Ошибка'
+
+    def __str__(self):
+        return f'Имя: {self.name}\n' \
+        f'Фамилия: {self.surname}'
+
 
 
 first_lecturer = Lecturer('Michael', 'Jones')
@@ -64,7 +102,7 @@ first_reviewer = Reviewer('Jane', 'August')
 first_reviewer.courses_attached = ['Web Development', 'Databases', 'Data Analytics']
 first_reviewer.rate_hw(first_student, 'Databases', 8)
 print(first_student.grades)
-
-
-
+print(first_student)
+print(first_lecturer)
+print(first_reviewer)
 
