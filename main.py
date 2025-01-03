@@ -9,7 +9,7 @@ class Student:
         self.grades = {}
     # Problem 2
 
-    def __student_existence__(self, courses_attached):
+    def __student_existence(self, courses_attached):
         for course in courses_attached:
             if course in self.finished_courses:
                 return True
@@ -19,7 +19,7 @@ class Student:
     # Problem 2
 
     def feedback(self, lecturer, grade, course_name):
-        if isinstance(lecturer, Lecturer) and self.__student_existence__(lecturer.courses_attached): # explain
+        if isinstance(lecturer, Lecturer) and self.__student_existence(lecturer.courses_attached):
             if course_name in lecturer.lecture_grades:
                 lecturer.lecture_grades[course_name] += [grade]
             else:
@@ -88,7 +88,7 @@ class Lecturer(Mentor):
     # Problem 3.2
     def __eq__(self, other):
         return self.average_grade() == other.average_grade()
-    # return self.size == other.size
+
 
     # Problem 3.1
 
