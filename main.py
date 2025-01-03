@@ -43,8 +43,8 @@ class Student:
         return f'Имя: {self.name}\n' \
         f'Фамилия: {self.surname}\n' \
         f'Средняя оценка за домашние задания: {self.average_grade()}\n' \
-        f'Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n' \ 
-        f'Завершенные курсы: {', '.join(self.courses_in_progress)}'
+        f'Курсы в процессе изучения: {', '.join(self.courses_in_progress)}\n' \
+        f'Завершенные курсы: {', '.join(self.finished_courses)}'
 
     # Problem 3.2
     def __eq__(self, other):
@@ -116,44 +116,90 @@ class Reviewer(Mentor):
         return f'Имя: {self.name}\n' \
         f'Фамилия: {self.surname}'
 
-#Problem 3.2
+
+#Problem 4
+
+def average_grade(student_list, course_name):
+    summa = 0
+    counter = 0
+    for student in student_list:
+        grade = student.grades.get(course_name)
+        if grade is not None:
+            summa += sum(grade)
+            counter += len(grade)
+    if counter != 0:
+        return summa / counter
+    else:
+        return 0
 
 
+def lecture_average_grade(lecture_list, course_name):
+    summa = 0
+    counter = 0
+    for lecture in lecture_list:
+        grade = lecture.lecture_grades.get(course_name)
+        if grade is not None:
+            summa += sum(grade)
+            counter += len(grade)
+    if counter != 0:
+        return summa / counter
+    else:
+        return 0
 
+
+first_student = Student('John', 'Evans', 'male')
+second_student = Student('John', 'Bates', 'male')
+third_student = Student('Peter', 'Parker', 'male')
 first_lecturer = Lecturer('Michael', 'Jones')
 second_lecturer = Lecturer('James', 'Dean')
 third_lecturer = Lecturer('Sandra', 'Bullock')
-#first_lecturer.average_grade()
+first_reviewer = Reviewer('Jane', 'August')
+second_reviewer = Reviewer('Bryan', 'Adams')
+course_name = 'Python for Beginners'
+course_name_second = 'Fundamentals of JavaScript'
+# first_student.finished_courses = ['Java']
+first_student.courses_in_progress = [course_name, course_name_second]
+second_student.courses_in_progress = [course_name, course_name_second]
+third_student.courses_in_progress = [course_name, course_name_second]
+courses_attached = [course_name, course_name_second]
+first_lecturer.courses_attached = [course_name, course_name_second]
+second_lecturer.courses_attached = [course_name, course_name_second]
+third_lecturer.courses_attached = [course_name, course_name_second]
+first_reviewer.courses_attached = [course_name, course_name_second]
+second_reviewer.courses_attached = [course_name, course_name_second]
 
+# third_student.finished_courses = ['Javascript']
+# third_student.courses_in_progress = ['POSTGRESSQL']
 
-first_lecturer.courses_attached = ['Java', 'Databases', 'Web Design']
-second_lecturer.courses_attached = ['Java', 'Databases', 'Web Design']
-
-first_student = Student('John', 'Evans', 'male')
-first_student.finished_courses = ['Java']
-first_student.courses_in_progress = ['Databases']
-second_student = first_student
-third_student = Student('Peter', 'Parker', 'male')
-third_student.finished_courses = ['Javascript']
-third_student.courses_in_progress = ['POSTGRESSQL']
-first_student.feedback(first_lecturer, 9, 'Databases')
-first_student.feedback(first_lecturer, 8, 'Databases')
-first_student.feedback(second_lecturer, 8, 'Databases')
-first_student.feedback(second_lecturer, 9, 'Databases')
-
+first_student.feedback(first_lecturer, 9, course_name)
+first_student.feedback(first_lecturer, 8, course_name_second)
+first_student.feedback(second_lecturer, 8, course_name)
+first_student.feedback(second_lecturer, 9, course_name_second)
+second_student.feedback(third_lecturer,10, course_name)
+first_reviewer.rate_hw(first_student, course_name, 8)
+first_reviewer.rate_hw(third_student,course_name_second, 5)
+second_reviewer.rate_hw(second_student, course_name, 8)
+first_reviewer.rate_hw(second_student, course_name_second, 5)
+print(second_student == first_student)
+print(first_student == third_student)
 print(first_lecturer == second_lecturer)
 print(first_lecturer == third_lecturer)
-print(first_lecturer.lecture_grades)
-
-
-first_reviewer = Reviewer('Jane', 'August')
-first_reviewer.courses_attached = ['Web Development', 'Databases', 'Data Analytics']
-first_reviewer.rate_hw(first_student, 'Databases', 8)
-first_reviewer.rate_hw(third_student, 'Javascript', 5)
-print(first_student == second_student)
-print(first_student == third_student)
-print(first_student.grades)
+#print(first_lecturer.lecture_grades)
+#print(first_student.grades)
 print(first_student)
 print(first_lecturer)
 print(first_reviewer)
+print(second_student)
+print(third_student)
+print(second_lecturer)
+print(third_lecturer)
+print(first_reviewer)
+print(second_reviewer, sep='\n\n')
+student_list = [first_student, second_student, third_student]
+average_grades_total = average_grade(student_list, course_name)
+print(f'The average grade for all students for the course is: {average_grades_total}', sep='\n\n')
+lecture_list = [first_lecturer, second_lecturer, third_lecturer]
+lecture_average_grades_total = lecture_average_grade(lecture_list, course_name)
+print(f'The average grade for all lecturers for the course is: {lecture_average_grades_total}', sep='\n\n')
+
 
